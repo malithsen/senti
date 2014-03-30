@@ -1,0 +1,19 @@
+div
+  .container
+    .row.info
+      .tweet(ng-repeat="tweet in tweets")
+        .emoti-col
+          img(src="/images/{{tweet.emoti}}")
+        .body-col(style="background-color:{{tweet.colour}}")
+          .author
+            a(href="https://twitter.com/{{tweet.user}}", target="_blank", ng-cloak)
+              | @{{tweet.user}}
+          .text(ng-bind-html="tweet.text|linkify:tweet.urls|highlight:tweet.positive:tweet.negative")
+          br
+          .score(ng-cloak) Score {{tweet.score}}
+          .time
+            a(href="{{tweet.tweet_url}}", target="_blank", ng-cloak)
+              |   
+              i.fa.fa-clock-o
+              |  {{tweet.time}} ago
+
