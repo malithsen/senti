@@ -76,12 +76,12 @@ twiApp.controller('TweetCtrl', ['$scope', '$http', '$location', function($scope,
 
   var loadSearch = function(term){
     $location.url('/search');
-    $http.get('search/' + $scope.keyword).success(function(data){
+    $http.get('search/' + term).success(function(data){
       renderTweets(data);
     });
   };
 
-  $scope.go = function ( path ) {
+  $scope.go = function (path) {
     if(path[0] == '@'){
       $location.path(path.slice(1, path.length));
     } else {

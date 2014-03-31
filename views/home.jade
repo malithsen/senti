@@ -4,9 +4,11 @@
   br
   h2 How to use
   p To analyze tweets from an individual user search @ followed by the twitter handle (eg: 
-    a(href="https://twitter.com/Malithsen", target="_blank")@Malithsen
+    a(ng-click="go('@Malithsen')")@Malithsen
     | )
-  p For a general search just search the keywords (eg: Sri Lanka)
+  p For a general search just search the keywords (eg: 
+    a(ng-click="go('Sri Lanka')") Sri Lanka
+    | )
   br
   h2 Caveats
   ul
