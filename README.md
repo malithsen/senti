@@ -23,3 +23,9 @@ credentials obtained from https://apps.twitter.com/app/new
 Then run
 <pre><code>npm start
 </code></pre>
+
+## To-Do##
+* Use dynamic routing.
+* Show a summary of results on top of the page.
+* Fix the bugs when highlighting keywords.
+* Improve UI.
