@@ -82,7 +82,7 @@ app.get('/views/:v', function(req, res) {
 
 app.get('*', function(req, res) {
   res.render('index', {
-    title: 'Senti',
+    title: 'Senti'
   });
 });
 

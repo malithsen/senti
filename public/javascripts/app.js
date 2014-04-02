@@ -8,10 +8,6 @@ twiApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
   .when('/', {
     templateUrl: 'views/home'
   })
-  .when('/search', {
-    templateUrl: 'views/tweets',
-    controller: "TweetCtrl"
-  })
   .when('/nouser', {
     templateUrl: 'views/nouser'
   })
@@ -69,13 +65,12 @@ twiApp.controller('TweetCtrl', ['$scope', '$http', '$location', function($scope,
   };
 
   var loadUser = function(name){
-    $http.get('getUser/' + $scope.keyword).success(function(data){
+    $http.get('getUser/' + name).success(function(data){
       renderTweets(data);
     });
   };
 
   var loadSearch = function(term){
-    $location.url('/search');
     $http.get('search/' + term).success(function(data){
       renderTweets(data);
     });
@@ -85,11 +80,15 @@ twiApp.controller('TweetCtrl', ['$scope', '$http', '$location', function($scope,
     if(path[0] == '@'){
       $location.path(path.slice(1, path.length));
     } else {
-      loadSearch(path);
+      $location.path('q=' + path);
     }
   };
 
-  if (paths.indexOf(curpath) < 0) {
+  if(curpath.slice(1, 3) == 'q='){
+    $scope.keyword = curpath.slice(3, curpath.length);
+    loadSearch($scope.keyword);
+  }
+  else if (paths.indexOf(curpath) < 0) {
     $scope.keyword = '@' + curpath.slice(1, curpath.length);
     loadUser($scope.keyword);
   }
