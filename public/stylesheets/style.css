@@ -145,3 +145,12 @@ body {
 .time a:hover {
     color: #444;
 }
+
+.col-centered {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+}
+.row {
+    width: 75%;
+}
