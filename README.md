@@ -26,6 +26,6 @@ Then run
 
 ## To-Do##
 * Use dynamic routing.
-* Show a summary of results on top of the page.
+* ~~Show a summary of results on top of the page.~~
 * Fix the bugs when highlighting keywords.
 * Improve UI.
