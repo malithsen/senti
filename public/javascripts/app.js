@@ -42,26 +42,50 @@ twiApp.filter('linkify', function(){
 });
 
 twiApp.controller('TweetCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
-  var paths = ['/', '/search', '/nouser', '/ratelimit']
-  var curpath = $location.path()
+  var paths = ['/', '/search', '/nouser', '/ratelimit'];
+  var curpath = $location.path();
+  $scope.hide_summary = true;
+
+  var generateChart = function(p, n){
+    var data = [
+    {
+      value: p,
+      color: "#2ecc71"
+    },
+    {
+      value: n,
+      color: "#e74c3c"
+    }]
+    var ctx = document.getElementById("pie").getContext("2d");
+    var myNewChart = new Chart(ctx).Pie(data);
+  };
 
   var renderTweets = function(data){
-  if (data.success == 1){
-    data.tweets.forEach(function(t){
-      if (t.score > 0){
-        t.emoti = 'happy.png';
-        t.colour = 'rgba(144, 221, 144, 0.7)'; // hand this over to css
-      } else{
-        t.emoti = 'sad.png';
-        t.colour = 'rgba(238, 154, 154, 0.7)';
+    var totalpos = 0;
+    var totalneg = 0;
+    if (data.success == 1){
+      data.tweets.forEach(function(t){
+        if (t.score > 0){
+          t.emoti = 'happy.png';
+          totalpos ++;
+          t.colour = 'rgba(144, 221, 144, 0.7)'; // hand this over to css
+        } else{
+          t.emoti = 'sad.png';
+          totalneg ++;
+          t.colour = 'rgba(238, 154, 154, 0.7)';
+        }
+      });
+      $scope.tweets = data.tweets;
+      $scope.totalpos = totalpos;
+      $scope.totalneg = totalneg;
+      $scope.hide_summary = false;
+    } else if(data.success == 0) {
+        $location.url('/nouser');
+    } else if(data.success == -1){
+        $location.url('/ratelimit');
       }
-    });
-    $scope.tweets = data.tweets;
-  } else if(data.success == 0) {
-      $location.url('/nouser');
-  } else if(data.success == -1){
-      $location.url('/ratelimit');
-    }
+
+    generateChart(totalpos, totalneg);
   };
 
   var loadUser = function(name){

@@ -1,6 +1,13 @@
 div
   .container
     .row.col-centered
+      .col-md-6.summary(ng-hide="hide_summary")
+        p Positive tweets&nbsp;&nbsp;&nbsp;{{totalpos}}
+        p Negative tweets&nbsp;&nbsp;&nbsp;{{totalneg}}
+      .col-md-6.chart
+        canvas#pie(width="150" height="150")
+  .container
+    .row.col-centered
       .tweet(ng-repeat="tweet in tweets")
         .emoti-col
           img(src="/images/{{tweet.emoti}}")
