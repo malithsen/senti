@@ -1,5 +1,5 @@
 'use strict';
-var twiApp = angular.module('twiApp', ['ngRoute', 'chieffancypants.loadingBar', 'ngAnimate', 'ngSanitize']);
+var twiApp = angular.module('twiApp', ['ngRoute', 'chieffancypants.loadingBar', 'ngAnimate', 'ngSanitize', 'angularMoment']);
 
 twiApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
   $locationProvider.html5Mode(true);
@@ -19,6 +19,9 @@ twiApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     controller: 'TweetCtrl'
   });
 }]);
+
+// show minutes upto 1 hour
+moment.relativeTimeThreshold('m', 60);
 
 twiApp.filter('linkify', function(){
   return function(text, urls){

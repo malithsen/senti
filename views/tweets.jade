@@ -22,5 +22,6 @@ div
             a(href="{{tweet.tweet_url}}", target="_blank", ng-cloak)
               |   
               i.fa.fa-clock-o
-              |  {{tweet.time}} ago
+              |   
+              span(am-time-ago="tweet.time")
 

@@ -24,21 +24,10 @@ var TwitterCon = function(con_key, con_sec, acc_key, acc_sec){
 
 TwitterCon.prototype.getSearchResults = function(word, cb){
     var twit = this.twit;
-    console.log("about to search");
     twit.search(word, {"count": 50, "include_rts": false, "lang": "en"}, function(err, data) {
-        // console.log(data["statuses"][0]);
-        console.log('inside search');
         var tweets = [];
         data.statuses.forEach(function(entry) {
-          var time = moment(entry.created_at);
-          var diff = moment().diff(time, 'hours');
-          if (diff < 1) {
-            diff = moment().diff(time, 'minutes') + ' minutes';
-          } else if (diff < 24) {
-            diff = diff + ' hours';
-          } else {
-            diff = moment().diff(time, 'days') + ' days';
-          }
+          var time = moment(entry.created_at).valueOf();
 
             var urls = entry.entities.urls.map(getExpandedURL);
             if (entry.entities.media) {
@@ -49,7 +38,7 @@ TwitterCon.prototype.getSearchResults = function(word, cb){
             var t = {};
             t.user = entry.user.screen_name;
             t.text = entry.text;
-            t.time = diff;
+            t.time = time;
             t.tweet_url = 'https://twitter.com/' + t.user + '/status/' + entry.id_str;
             t.media_url = entry.entities.media ? [entry.entities.media[0].media_url, entry.entities.media[0].expanded_url] : '';
             t.urls = urls;
@@ -69,23 +58,13 @@ TwitterCon.prototype.getSearchResults = function(word, cb){
 };
 TwitterCon.prototype.getUserTweets = function(user, cb){
     var twit = this.twit;
-    console.log(user);
     twit.getUserTimeline({"screen_name": user, "count": 50, "include_rts": false}, function(err, data){
-        // console.log(data);
         if (data == undefined) {
           cb(null, {"success": 0, "tweets": []});
         } else {
           var tweets = [];
           data.forEach(function(entry) {
-          var time = moment(entry.created_at);
-          var diff = moment().diff(time, 'hours');
-          if (diff < 1) {
-            diff = moment().diff(time, 'minutes') + ' minutes';
-          } else if (diff < 24) {
-            diff = diff + ' hours';
-          } else {
-            diff = moment().diff(time, 'days') + ' days';
-          }
+          var time = moment(entry.created_at).valueOf();
 
             var urls = entry.entities.urls.map(getExpandedURL);
             if (entry.entities.media) {
@@ -96,7 +75,7 @@ TwitterCon.prototype.getUserTweets = function(user, cb){
             var t = {};
             t.user = entry.user.screen_name;
             t.text = entry.text;
-            t.time = diff;
+            t.time = time;
             t.tweet_url = 'https://twitter.com/' + t.user + '/status/' + entry.id_str;
             t.media_url = entry.entities.media ? [entry.entities.media[0].media_url, entry.entities.media[0].expanded_url] : '';
             t.urls = urls;
@@ -110,8 +89,6 @@ TwitterCon.prototype.getUserTweets = function(user, cb){
               }
             });
           });
-          // tweets = tweets.slice(-11, -1);
-          console.log(tweets.length);
           var result = {"success": 1, "tweets": tweets}
           cb(null, result);
         }
