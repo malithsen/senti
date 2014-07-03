@@ -1,7 +1,32 @@
-@media (max-width: 768px){
-    .container {
-        padding-top: 100px;
+@media(max-width:767px) {
+    .navbar .navbar-form {
+        float: right;
     }
+    .navbar .navbar-header {
+        float:none;
+        margin: 0 auto;
+        display: table;
+        table-layout: fixed;
+    }
+    .ribbon {
+        display: none;
+    }
+    .container {
+        padding-top: 50px;
+    }
+}
+@media(min-width:768px) {
+    .navbar .navbar-form {
+        width: 250px;
+    }
+}
+.navbar .navbar-form {
+    padding: 0 0 0 0;
+    margin-right: 0;
+    margin-left: 0;
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 body {
